@@ -1,0 +1,29 @@
+{
+  "name": "nfd-protocol",
+  "description": "nearForm deployer command protocol module",
+  "keywords": [
+    "nearForm",
+    "deployer",
+    "command",
+    "protocol"
+  ],
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": "Peter Elger (http://nearform.com/)",
+  "contributors": [
+    "Peter Elger <elger.peter@gmail.com> (http://peterelger.com/)"
+  ],
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "cmdsrv": "~0.1.3",
+    "winston": "~0.7.3"
+  },
+  "main": "lib/main",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pelger/nfd-protocol.git"
+  },
+  "devDependencies": {}
+}
