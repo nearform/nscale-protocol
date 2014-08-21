@@ -17,7 +17,12 @@ MockAuth.prototype.login = function(username, password, callback) {
 };
 
 MockAuth.prototype.userInfo = function(token, callback) {
-  callback(err, user);
+  var result = {
+    user: {
+      name: 'mocked user'
+    }
+  }
+  callback(null, result);
 };
 
 module.exports = MockAuth;

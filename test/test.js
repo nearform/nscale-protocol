@@ -55,4 +55,52 @@ describe('protocol with mocks', function() {
 
     instance.write('login matteo mypass\n')
   });
+
+  it('must fail logins', function(done) {
+
+    var messages = [
+      JSON.stringify({"request":"login","responseType":"stderr","stderr":{},"level":"error"}),
+      "Error: no such user"
+    ]
+
+    auth.login = function(user, pass, callback) {
+      callback(new Error('no such user'));
+    };
+
+    instance.on('data', function(data) {
+      expect(data.toString().trim()).to.eql(messages.shift());
+    });
+
+    instance.on('end', done);
+
+    instance.write('login matteo mypass\n');
+  });
+
+  it('must authenticate with a token', function(done) {
+    instance.on('data', function(data) {
+      expect(data.toString().trim()).to.eql(JSON.stringify({"request":"token","responseType":"response","response":{"user":{"name":"mocked user"}}}));
+      done()
+    })
+    instance.write('token abcde\n')
+  })
+
+  it('must fail auth token', function(done) {
+
+    var messages = [
+      JSON.stringify({"request":"token","responseType":"stderr","stderr":{},"level":"error"}),
+      "Error: no such user"
+    ]
+
+    auth.userInfo = function(token, callback) {
+      callback(new Error('no such user'));
+    };
+
+    instance.on('data', function(data) {
+      expect(data.toString().trim()).to.eql(messages.shift());
+    });
+
+    instance.on('end', done);
+
+    instance.write('token abcde\n');
+  });
 });

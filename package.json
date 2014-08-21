@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "bcksrv": "^0.1.0",
-    "nfd-auth": "git+ssh://git@github.com:nearform/nfd-auth.git#v0.0.2",
     "winston": "~0.7.3"
   },
   "main": "lib/main",
