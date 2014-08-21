@@ -17,14 +17,18 @@
     "node": "*"
   },
   "dependencies": {
-    "cmdsrv": "~0.1.3",
-    "winston": "~0.7.3",
-    "nfd-auth": "git+ssh://git@github.com:nearform/nfd-auth.git#v0.0.2"
+    "bcksrv": "^0.1.0",
+    "nfd-auth": "git+ssh://git@github.com:nearform/nfd-auth.git#v0.0.2",
+    "winston": "~0.7.3"
   },
   "main": "lib/main",
   "repository": {
     "type": "git",
     "url": "https://github.com/pelger/nfd-protocol.git"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^1.21.4",
+    "must": "^0.12.0",
+    "sinon": "^1.10.3"
+  }
 }
