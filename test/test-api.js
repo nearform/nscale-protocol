@@ -39,6 +39,8 @@ describe('protocol api', function() {
         })
       });
 
+      instance.on('error', done);
+
       instance.write(command + '\n');
     });
 
@@ -72,6 +74,8 @@ describe('protocol api', function() {
           done();
         })
       });
+
+      instance.on('error', done);
 
       instance.write(command + '\n');
       instance.write(JSON.stringify(data));

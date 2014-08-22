@@ -26,6 +26,8 @@ describe('protocol authorization', function() {
       done();
     });
 
+    instance.on('error', done);
+
     instance.write('unknown command\n')
   });
 
@@ -53,6 +55,8 @@ describe('protocol authorization', function() {
       done();
     });
 
+    instance.on('error', done);
+
     instance.write('login matteo mypass\n')
   });
 
@@ -72,6 +76,7 @@ describe('protocol authorization', function() {
     });
 
     instance.on('end', done);
+    instance.on('error', done);
 
     instance.write('login matteo mypass\n');
   });
@@ -81,6 +86,8 @@ describe('protocol authorization', function() {
       expect(data.toString().trim()).to.eql(JSON.stringify({"request":"token","responseType":"response","response":{"user":{"name":"mocked user"}}}));
       done()
     })
+    instance.on('error', done);
+
     instance.write('token abcde\n')
   })
 
@@ -100,6 +107,8 @@ describe('protocol authorization', function() {
     });
 
     instance.on('end', done);
+
+    instance.on('error', done);
 
     instance.write('token abcde\n');
   });
@@ -122,7 +131,23 @@ describe('protocol authorization', function() {
       })
     });
 
+    instance.on('error', done);
+
     instance.write('login matteo mypass\n')
     instance.write('quit\n')
+  });
+
+
+  it('must bubble up thrown errors to the instance', function(done) {
+
+    auth.login = function(user, pass, callback) {
+      throw new Error('muahhaa');
+    };
+
+    instance.on('error', function(err) {
+      done();
+    });
+
+    instance.write('login\n');
   });
 });
