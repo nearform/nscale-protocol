@@ -204,4 +204,16 @@ describe('protocol api', function() {
       };
     }
   );
+
+  testCommand('must build a container',
+    {"request":"container build","responseType":"response","response": { result: "ok" }},
+    'container build sudc abcdef',
+    function(instance, api, auth) {
+      api.buildContainer = function(user, systemId, containerId, out, cb) {
+        expect(systemId).to.eql('sudc');
+        expect(containerId).to.eql('abcdef');
+        cb(null, { result: 'ok' });
+      };
+    }
+  );
 });

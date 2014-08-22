@@ -54,18 +54,6 @@ MockApi.prototype.listContainers = function(systemId, callback) {
   callback(this.nextError, {});
 };
 
-MockApi.prototype.addContainer = function(user, systemId, containerJson, callback) {
-  callback(this.nextError);
-};
-
-MockApi.prototype.putContainer = function(user, systemId, containerJson, callback) {
-  callback(this.nextError);
-};
-
-MockApi.prototype.deleteContainer = function(user, systemId, containerId, callback) {
-  callback(this.nextError);
-};
-
 MockApi.prototype.buildContainer = function(user, systemId, containerId, out, callback) {
   var result = {};
   callback(this.nextError, result);
