@@ -30,9 +30,26 @@ describe('protocol api', function() {
       }
 
 
-      instance.on('data', function(data) {
+      instance.once('data', function(data) {
         expect(data.toString().trim()).to.eql(JSON.stringify(expected));
-        done();
+        instance.write('quit\n');
+        instance.once('data', function(data) {
+          expect(data.toString().trim()).to.eql(JSON.stringify({"request":"quit","responseType":"response","response":{"bye":"bye!"}}));
+          done();
+        })
+      });
+
+      instance.write(command + '\n');
+    });
+
+    it('must support errors for ' + command, function(done) {
+      api.nextError = new Error('this should happen')
+
+      instance.once('data', function(data) {
+        instance.on('data', function(data) {
+          expect(data.toString()).to.eql('Error: this should happen\n');
+          done();
+        });
       });
 
       instance.write(command + '\n');
@@ -46,7 +63,14 @@ describe('protocol api', function() {
 
   testCommand('must clone a system',
     {"request":"system clone","responseType":"response","response":{"result":"ok"}},
-    'system clone git@github.com:pelger/sudc.git'
+    'system clone git@github.com:pelger/sudc.git',
+    function(instance, api, auth) {
+      api.cloneSystem = function(user, url, cb) {
+        expect(url).to.eql('git@github.com:pelger/sudc.git');
+        expect(user).to.not.be.null();
+        cb(null);
+      };
+    }
   );
 
   testCommand('must list a system',
@@ -55,6 +79,31 @@ describe('protocol api', function() {
     function(instance, api, auth) {
       api.listSystems = function(cb) {
         cb(null, [{"name":"sudc","id":"f0033600-36aa-4820-8006-83e90cc20e5e"}]);
+      };
+    }
+  );
+
+  testCommand('must sync a system',
+    {"request":"system sync","responseType":"response","response":{"result":"ok"}},
+    'system sync sudc',
+    function(instance, api, auth) {
+      api.syncSystem = function(user, id, cb) {
+        expect(user).to.not.be.null();
+        expect(id).to.eql('sudc');
+        cb(null);
+      };
+    }
+  );
+
+  testCommand('must create a system',
+    {"request":"system create","responseType":"response","response":{"id":"d59da4c1-2565-49d3-a8ee-b9c6a755f6d7"}},
+    'system create abcde mynamespace',
+    function(instance, api, auth) {
+      api.createSystem = function(user, name, namespace, cb) {
+        expect(user).to.not.be.null();
+        expect(name).to.eql('abcde');
+        expect(namespace).to.eql('mynamespace');
+        cb(null, { id: 'd59da4c1-2565-49d3-a8ee-b9c6a755f6d7' });
       };
     }
   );
