@@ -28,10 +28,12 @@
     "istanbul": "^0.3.0",
     "mocha": "^1.21.4",
     "must": "^0.12.0",
+    "pre-commit": "0.0.9",
     "sinon": "^1.10.3"
   },
   "scripts": {
     "test": "mocha --recursive test 2>&1",
     "coverage": "rm -rf coverage; istanbul cover _mocha -- --recursive --reporter spec --bail 2>&1"
-  }
+  },
+  "pre-commit": "test"
 }
