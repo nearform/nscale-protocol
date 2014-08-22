@@ -229,4 +229,15 @@ describe('protocol api', function() {
       };
     }
   );
+
+  testCommand('must analyze a system',
+    {"request":"system analyze","responseType":"response","response": require(__dirname + '/fixture/deployed.json').response },
+    'system analyze sudc',
+    function(instance, api, auth) {
+      api.analyzeSystem = function(user, systemId, out, cb) {
+        expect(systemId).to.eql('sudc');
+        cb(null, require(__dirname + '/fixture/deployed.json').response);
+      };
+    }
+  );
 });
