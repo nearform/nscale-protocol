@@ -63,7 +63,7 @@ describe('protocol authorization', function() {
   it('must fail logins', function(done) {
 
     var messages = [
-      JSON.stringify({"request":"login","responseType":"response","response":{"result":"err","err":{}}}),
+      JSON.stringify({"request":"login","responseType":"stderr","stderr":"no such user","level": "error"}),
       "Error: no such user"
     ]
 
@@ -94,7 +94,7 @@ describe('protocol authorization', function() {
   it('must fail auth token', function(done) {
 
     var messages = [
-      JSON.stringify({"request":"token","responseType":"response","response":{"result":"err","err":{}}}),
+      JSON.stringify({"request":"token","responseType":"stderr","stderr":"no such user", "level": "error"}),
       "Error: no such user"
     ]
 
