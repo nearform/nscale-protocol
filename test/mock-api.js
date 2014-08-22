@@ -36,7 +36,7 @@ MockApi.prototype.putSystem = function(user, systemJson, callback) {
   callback(null);
 };
 
-MockApi.prototype.cloneSystem = function(user, url) {
+MockApi.prototype.cloneSystem = function(user, url, callback) {
   callback(null);
 };
 

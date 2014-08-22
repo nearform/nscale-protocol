@@ -4,7 +4,7 @@ var protocol = require('../lib/main');
 var MockApi = require('./mock-api');
 var MockAuth = require('./mock-auth');
 
-describe('protocol with mocks', function() {
+describe('protocol authorization', function() {
   var instance;
   var api;
   var auth;
