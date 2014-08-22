@@ -240,4 +240,15 @@ describe('protocol api', function() {
       };
     }
   );
+
+  testCommand('must check a system',
+    {"request":"system check","responseType":"response","response": { result: "ok" }},
+    'system check sudc',
+    function(instance, api, auth) {
+      api.checkSystem= function(user, systemId, cb) {
+        expect(systemId).to.eql('sudc');
+        cb(null, { result: 'ok' });
+      };
+    }
+  );
 });
