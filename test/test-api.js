@@ -275,4 +275,15 @@ describe('protocol api', function() {
       };
     }
   );
+
+  testCommand('must list the revisions',
+    require(__dirname + '/fixture/revision-list.json'),
+    'revision list sudc',
+    function(instance, api, auth) {
+      api.listRevisions = function(id, cb) {
+        expect(id).to.eql('sudc');
+        cb(null, require(__dirname + '/fixture/revision-list.json').response);
+      };
+    }
+  );
 });
