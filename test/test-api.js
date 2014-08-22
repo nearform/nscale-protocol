@@ -56,6 +56,44 @@ describe('protocol api', function() {
     });
   }
 
+  function testMultiLineCommand(name, expected, command, data, pre) {
+    it(name, function(done) {
+
+      if (pre) {
+        pre(instance, api, auth);
+      }
+
+
+      instance.once('data', function(data) {
+        expect(data.toString().trim()).to.eql(JSON.stringify(expected));
+        instance.write('quit\n');
+        instance.once('data', function(data) {
+          expect(data.toString().trim()).to.eql(JSON.stringify({"request":"quit","responseType":"response","response":{"bye":"bye!"}}));
+          done();
+        })
+      });
+
+      instance.write(command + '\n');
+      instance.write(JSON.stringify(data));
+      instance.write('\nEND\n');
+    });
+
+    it('must support errors for ' + command, function(done) {
+      api.nextError = new Error('this should happen')
+
+      instance.once('data', function(data) {
+        instance.on('data', function(data) {
+          expect(data.toString()).to.eql('Error: this should happen\n');
+          done();
+        });
+      });
+
+      instance.write(command + '\n');
+      instance.write(JSON.stringify(data));
+      instance.write('\nEND\n');
+    });
+  }
+
   testCommand('must list systems with no systems',
     {"request":"system list","responseType":"response","response":[]},
     'system list'
@@ -150,6 +188,19 @@ describe('protocol api', function() {
       api.listContainers = function(id, cb) {
         expect(id).to.eql('sudc');
         cb(null, require(__dirname + '/fixture/container-list.json').response);
+      };
+    }
+  );
+
+  testMultiLineCommand('must put a system',
+    {"request":"system put","responseType":"response","response":{ result: "ok" }},
+    'system put',
+    require('./fixture/system.json'),
+    function(instance, api, auth) {
+      api.putSystem = function(user, system, cb) {
+        expect(user).to.not.be.null();
+        expect(JSON.parse(system)).to.eql(require('./fixture/system.json'));
+        cb(null);
       };
     }
   );

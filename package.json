@@ -17,8 +17,7 @@
     "node": "*"
   },
   "dependencies": {
-    "bcksrv": "^0.1.0",
-    "winston": "~0.7.3"
+    "bcksrv": "^0.1.2"
   },
   "main": "lib/main",
   "repository": {
