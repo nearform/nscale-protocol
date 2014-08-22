@@ -75,7 +75,7 @@ MockApi.prototype.checkSystem = function(user, systemId, callback) {
 };
 
 MockApi.prototype.markRevision = function(user, systemId, revisionId, callback) {
-  var result = {};
+  var result = { result: 'ok' };
   callback(this.nextError, result);
 };
 

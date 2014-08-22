@@ -251,4 +251,16 @@ describe('protocol api', function() {
       };
     }
   );
+
+  testCommand('must mark a revision',
+    {"request":"revision mark","responseType":"response","response": { result: "ok" }},
+    'revision mark sudc abcdef',
+    function(instance, api, auth) {
+      api.checkSystem= function(user, systemId, revisionId, cb) {
+        expect(systemId).to.eql('sudc');
+        expect(revisionId).to.eql('abcdef');
+        cb(null, { result: 'ok' });
+      };
+    }
+  );
 });
