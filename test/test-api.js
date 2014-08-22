@@ -263,4 +263,16 @@ describe('protocol api', function() {
       };
     }
   );
+
+  testCommand('must preview a system deploy',
+    {"request":"revision preview","responseType":"response","response": { result: "ok" }},
+    'revision preview sudc abcdef',
+    function(instance, api, auth) {
+      api.previewSystemDeploy = function(user, systemId, revisionId, out, cb) {
+        expect(systemId).to.eql('sudc');
+        expect(revisionId).to.eql('abcdef');
+        cb(null, { result: 'ok' });
+      };
+    }
+  );
 });
