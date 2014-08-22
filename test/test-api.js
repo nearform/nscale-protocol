@@ -298,4 +298,15 @@ describe('protocol api', function() {
       };
     }
   );
+
+  testCommand('must list the timeline',
+    require(__dirname + '/fixture/timeline-list.json'),
+    'timeline list sudc',
+    function(instance, api, auth) {
+      api.timeline = function(id, cb) {
+        expect(id).to.eql('sudc');
+        cb(null, require(__dirname + '/fixture/timeline-list.json').response);
+      };
+    }
+  );
 });
