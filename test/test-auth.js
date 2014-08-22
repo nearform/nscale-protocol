@@ -103,4 +103,26 @@ describe('protocol authorization', function() {
 
     instance.write('token abcde\n');
   });
+
+  it('command after login', function(done) {
+
+    auth.login = function(user, pass, callback) {
+      var result = {
+        user: {
+          name: 'matteo'
+        }
+      };
+      callback(null, result);
+    };
+
+    instance.once('data', function(data) {
+      instance.once('data', function(data) {
+        expect(data.toString().trim()).to.eql(JSON.stringify({"request":"quit","responseType":"response","response":{"bye":"bye!"}}));
+        done();
+      })
+    });
+
+    instance.write('login matteo mypass\n')
+    instance.write('quit\n')
+  });
 });
