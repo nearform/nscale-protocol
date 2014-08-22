@@ -286,4 +286,16 @@ describe('protocol api', function() {
       };
     }
   );
+
+  testCommand('must get a revision',
+    require(__dirname + '/fixture/revision-get.json'),
+    'revision get sudc abcdef',
+    function(instance, api, auth) {
+      api.getRevision = function(id, rev, cb) {
+        expect(id).to.eql('sudc');
+        expect(rev).to.eql('abcdef');
+        cb(null, require(__dirname + '/fixture/revision-get.json').response);
+      };
+    }
+  );
 });
