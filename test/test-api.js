@@ -95,15 +95,24 @@ describe('protocol api', function() {
     }
   );
 
-  testCommand('must create a system',
-    {"request":"system create","responseType":"response","response":{"id":"d59da4c1-2565-49d3-a8ee-b9c6a755f6d7"}},
-    'system create abcde mynamespace',
+  testCommand('must get the deployed system',
+    require(__dirname + '/fixture/deployed.json'),
+    'system deployed sudc',
     function(instance, api, auth) {
-      api.createSystem = function(user, name, namespace, cb) {
-        expect(user).to.not.be.null();
-        expect(name).to.eql('abcde');
-        expect(namespace).to.eql('mynamespace');
-        cb(null, { id: 'd59da4c1-2565-49d3-a8ee-b9c6a755f6d7' });
+      api.getDeployedSystem = function(id, cb) {
+        expect(id).to.eql('sudc');
+        cb(null, require(__dirname + '/fixture/deployed.json').response);
+      };
+    }
+  );
+
+  testCommand('must get the head revision of a system',
+    {"request":"system get","responseType":"response","response": require(__dirname + '/fixture/deployed.json').response },
+    'system get sudc',
+    function(instance, api, auth) {
+      api.getHeadSystem = function(id, cb) {
+        expect(id).to.eql('sudc');
+        cb(null, require(__dirname + '/fixture/deployed.json').response);
       };
     }
   );
