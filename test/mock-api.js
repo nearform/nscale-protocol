@@ -51,7 +51,7 @@ MockApi.prototype.addRemote = function(user, systemId, url, callback) {
 };
 
 MockApi.prototype.listContainers = function(systemId, callback) {
-  callback(this.nextError, containers);
+  callback(this.nextError, {});
 };
 
 MockApi.prototype.addContainer = function(user, systemId, containerJson, callback) {

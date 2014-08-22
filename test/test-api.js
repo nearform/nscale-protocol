@@ -129,4 +129,28 @@ describe('protocol api', function() {
       };
     }
   );
+
+  testCommand('must add a remote to a system',
+    {"request":"remote add","responseType":"response","response":{"result":"ok"}},
+    'remote add sudc git@github.com:pelger/sudc.git',
+    function(instance, api, auth) {
+      api.addRemote = function(user, id, url, cb) {
+        expect(id).to.eql('sudc');
+        expect(url).to.eql('git@github.com:pelger/sudc.git');
+        expect(user).to.not.be.null();
+        cb(null);
+      };
+    }
+  );
+
+  testCommand('must list the containers',
+    require(__dirname + '/fixture/container-list.json'),
+    'container list sudc',
+    function(instance, api, auth) {
+      api.listContainers = function(id, cb) {
+        expect(id).to.eql('sudc');
+        cb(null, require(__dirname + '/fixture/container-list.json').response);
+      };
+    }
+  );
 });
