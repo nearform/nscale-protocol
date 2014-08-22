@@ -216,4 +216,17 @@ describe('protocol api', function() {
       };
     }
   );
+
+  testCommand('must deploy a system',
+    {"request":"system deploy","responseType":"response","response": { result: "ok" }},
+    'system deploy sudc abcdef',
+    function(instance, api, auth) {
+      api.deploySystem = function(user, systemId, revisionId, type, out, cb) {
+        expect(systemId).to.eql('sudc');
+        expect(revisionId).to.eql('abcdef');
+        expect(type).to.eql('live');
+        cb(null, { result: 'ok' });
+      };
+    }
+  );
 });
