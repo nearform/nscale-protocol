@@ -16,7 +16,8 @@ describe('protocol api', function() {
   beforeEach(function(done) {
     api = new MockApi();
     auth = new MockAuth();
-    instance = protocol(api, auth, logger).stream();
+    debugger;
+    instance = protocol().stream(api, auth);
     instance.write('token abcde\n'); // we authenticate
     instance.resume(); // swallow token response
     process.nextTick(done);
@@ -222,8 +223,8 @@ describe('protocol api', function() {
   );
 
   testCommand('must deploy a system',
-    {"request":"system deploy","responseType":"response","response": { result: "ok" }},
-    'system deploy sudc abcdef',
+    {"request":"revision deploy","responseType":"response","response": { }},
+    'revision deploy sudc abcdef',
     function(instance, api, auth) {
       api.deploySystem = function(user, systemId, revisionId, type, out, cb) {
         expect(systemId).to.eql('sudc');
@@ -249,7 +250,7 @@ describe('protocol api', function() {
     {"request":"system check","responseType":"response","response": { result: "ok" }},
     'system check sudc',
     function(instance, api, auth) {
-      api.checkSystem= function(user, systemId, cb) {
+      api.checkSystem= function(user, systemId, out, cb) {
         expect(systemId).to.eql('sudc');
         cb(null, { result: 'ok' });
       };
@@ -269,7 +270,7 @@ describe('protocol api', function() {
   );
 
   testCommand('must preview a system deploy',
-    {"request":"revision preview","responseType":"response","response": { result: "ok" }},
+    {"request":"revision preview","responseType":"response","response": {}},
     'revision preview sudc abcdef',
     function(instance, api, auth) {
       api.previewSystemDeploy = function(user, systemId, revisionId, out, cb) {

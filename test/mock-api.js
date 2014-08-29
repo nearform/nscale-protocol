@@ -59,7 +59,7 @@ MockApi.prototype.buildContainer = function(user, systemId, containerId, out, ca
   callback(this.nextError, result);
 };
 
-MockApi.prototype.deploySystem = function(user, systemId, revisionId, live, out, callback) {
+MockApi.prototype.deployRevision = function(user, systemId, revisionId, live, out, callback) {
   var result = {};
   callback(this.nextError, result);
 };
@@ -69,7 +69,7 @@ MockApi.prototype.analyzeSystem = function(user, systemId, out, callback) {
   callback(this.nextError, result);
 };
 
-MockApi.prototype.checkSystem = function(user, systemId, callback) {
+MockApi.prototype.checkSystem = function(user, systemId, out, callback) {
   var result = {};
   callback(this.nextError, result);
 };
@@ -79,7 +79,7 @@ MockApi.prototype.markRevision = function(user, systemId, revisionId, callback) 
   callback(this.nextError, result);
 };
 
-MockApi.prototype.previewSystemDeploy = function(user, systemId, revisionId, out, callback) {
+MockApi.prototype.previewRevision = function(user, systemId, revisionId, out, callback) {
   var result = {};
   callback(this.nextError, result);
 };

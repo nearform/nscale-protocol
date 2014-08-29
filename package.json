@@ -17,7 +17,8 @@
     "node": "*"
   },
   "dependencies": {
-    "bcksrv": "^0.1.2"
+    "bcksrv": "^0.1.2",
+    "bunyan": "~1.0.0"
   },
   "main": "lib/main",
   "repository": {
