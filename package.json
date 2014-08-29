@@ -1,14 +1,17 @@
 {
-  "name": "nfd-protocol",
+  "name": "nscale-protocol",
   "description": "nearForm deployer command protocol module",
   "keywords": [
     "nearForm",
     "deployer",
     "command",
-    "protocol"
+    "protocol",
+    "nscale",
+    "docker",
+    "deploy"
   ],
   "version": "0.0.5",
-  "license": "MIT",
+  "license": "Artistic 2.0",
   "author": "Peter Elger (http://nearform.com/)",
   "contributors": [
     "Peter Elger <elger.peter@gmail.com> (http://peterelger.com/)",
