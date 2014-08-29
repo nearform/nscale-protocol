@@ -17,7 +17,7 @@ describe('protocol api', function() {
     api = new MockApi();
     auth = new MockAuth();
     debugger;
-    instance = protocol().stream(api, auth);
+    instance = protocol().set(api, auth, logger).stream();
     instance.write('token abcde\n'); // we authenticate
     instance.resume(); // swallow token response
     process.nextTick(done);

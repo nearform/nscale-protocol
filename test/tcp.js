@@ -18,7 +18,7 @@ describe('tcp access', function() {
   beforeEach(function(done) {
     api = new MockApi();
     auth = new MockAuth();
-    server = protocol(api, auth, logger).start();
+    server = protocol().start(api, auth, logger);
     server.on('listening', function() {
       instance = net.connect({ host: 'localhost', port: 3223 });
       done();

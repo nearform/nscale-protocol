@@ -16,7 +16,7 @@ describe('protocol authorization', function() {
   beforeEach(function() {
     api = new MockApi();
     auth = new MockAuth();
-    instance = protocol().stream(api, auth);
+    instance = protocol().set(api, auth, logger).stream();
   });
 
   it('must handle unknown commands', function(done) {
