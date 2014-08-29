@@ -12,4 +12,4 @@ internal dependency of [nscale](http://github.com/nearform/nscale).
 License
 -------
 
-Artistic 2.0
+Artistic License 2.0
