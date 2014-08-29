@@ -1,6 +1,6 @@
 {
   "name": "nscale-protocol",
-  "description": "nearForm deployer command protocol module",
+  "description": "nscale deployer command protocol module",
   "keywords": [
     "nearForm",
     "deployer",
@@ -10,12 +10,12 @@
     "docker",
     "deploy"
   ],
-  "version": "0.0.5",
+  "version": "0.1.0",
   "license": "Artistic 2.0",
   "author": "Peter Elger (http://nearform.com/)",
   "contributors": [
     "Peter Elger <elger.peter@gmail.com> (http://peterelger.com/)",
-    "Matteo Collina <hello@matteo.collin.com>"
+    "Matteo Collina <hello@matteo.collina.com>"
   ],
   "engines": {
     "node": "*"
