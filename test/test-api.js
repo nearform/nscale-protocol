@@ -209,6 +209,7 @@ describe('protocol api', function() {
     }
   );
 
+  /*
   testCommand('must build a container',
     {"request":"container build","responseType":"response","response": { result: "ok" }},
     'container build sudc abcdef',
@@ -220,6 +221,7 @@ describe('protocol api', function() {
       };
     }
   );
+  */
 
   testCommand('must deploy a system',
     {"request":"revision deploy","responseType":"response","response": { }},
