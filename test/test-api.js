@@ -105,9 +105,9 @@ describe('protocol api', function() {
 
   testCommand('must clone a system',
     {"request":"system clone","responseType":"response","response":{"result":"ok"}},
-    'system clone git@github.com:pelger/sudc.git',
+    'system clone git@github.com:pelger/sudc.git /tmp',
     function(instance, api, auth) {
-      api.cloneSystem = function(user, url, cb) {
+      api.cloneSystem = function(user, url, cwd, cb) {
         expect(url).to.eql('git@github.com:pelger/sudc.git');
         expect(user).to.not.be.null();
         cb(null);
@@ -139,9 +139,9 @@ describe('protocol api', function() {
 
   testCommand('must create a system',
     {"request":"system create","responseType":"response","response":{"id":"d59da4c1-2565-49d3-a8ee-b9c6a755f6d7"}},
-    'system create abcde mynamespace',
+    'system create abcde mynamespace /tmp',
     function(instance, api, auth) {
-      api.createSystem = function(user, name, namespace, cb) {
+      api.createSystem = function(user, name, namespace, cwd, cb) {
         expect(user).to.not.be.null();
         expect(name).to.eql('abcde');
         expect(namespace).to.eql('mynamespace');

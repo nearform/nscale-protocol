@@ -19,7 +19,7 @@ MockApi.prototype.listSystems = function(cb) {
   cb(this.nextError, systems);
 };
 
-MockApi.prototype.createSystem = function(user, name, namespace, callback) {
+MockApi.prototype.createSystem = function(user, name, namespace, cwd, callback) {
   var system = {};
   callback(this.nextError, system);
 };
@@ -38,7 +38,7 @@ MockApi.prototype.putSystem = function(user, systemJson, callback) {
   callback(this.nextError);
 };
 
-MockApi.prototype.cloneSystem = function(user, url, callback) {
+MockApi.prototype.cloneSystem = function(user, url, cwd, callback) {
   callback(this.nextError);
 };
 
