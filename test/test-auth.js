@@ -60,6 +60,37 @@ describe('protocol authorization', function() {
     instance.write('login matteo mypass\n')
   });
 
+  it('must support login with no user and pass', function(done) {
+
+    auth.login = function(user, pass, callback) {
+      expect(user).to.equal('')
+      expect(pass).to.equal('')
+      var result = {
+        user: {
+          name: 'matteo'
+        }
+      };
+      callback(null, result);
+    };
+
+    instance.on('data', function(data) {
+      expect(data.toString().trim()).to.eql(JSON.stringify({
+        request: 'login',
+        responseType: 'response',
+        response: {
+          user: {
+            name: 'matteo'
+          }
+        }
+      }));
+      done();
+    });
+
+    instance.on('error', done);
+
+    instance.write('login\n')
+  });
+
   /*
   it('must fail logins', function(done) {
 

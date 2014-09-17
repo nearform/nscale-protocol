@@ -150,6 +150,28 @@ describe('protocol api', function() {
     }
   );
 
+  testCommand('must create a system with quotes in the name',
+    {"request":"system create","responseType":"response","response":{"id":"d59da4c1-2565-49d3-a8ee-b9c6a755f6d7"}},
+    'system create "abc de" mynamespace /tmp',
+    function(instance, api, auth) {
+      api.createSystem = function(user, name, namespace, cwd, cb) {
+        expect(name).to.eql('abc de');
+        cb(null, { id: 'd59da4c1-2565-49d3-a8ee-b9c6a755f6d7' });
+      };
+    }
+  );
+
+  testCommand('must create a system with quotes in the path',
+    {"request":"system create","responseType":"response","response":{"id":"d59da4c1-2565-49d3-a8ee-b9c6a755f6d7"}},
+    'system create abc mynamespace "/tmp/ab cd"',
+    function(instance, api, auth) {
+      api.createSystem = function(user, name, namespace, cwd, cb) {
+        expect(cwd).to.eql('/tmp/ab cd');
+        cb(null, { id: 'd59da4c1-2565-49d3-a8ee-b9c6a755f6d7' });
+      };
+    }
+  );
+
   testCommand('must get the deployed system',
     require(__dirname + '/fixture/deployed.json'),
     'system deployed sudc',
