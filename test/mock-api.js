@@ -42,6 +42,10 @@ MockApi.prototype.cloneSystem = function(user, url, cwd, callback) {
   callback(this.nextError);
 };
 
+MockApi.prototype.linkSystem = function(user, path, cwd, callback) {
+  callback(this.nextError);
+};
+
 MockApi.prototype.syncSystem = function(user, systemId, callback) {
   callback(this.nextError);
 };

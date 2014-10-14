@@ -115,6 +115,18 @@ describe('protocol api', function() {
     }
   );
 
+  testCommand('must link a system',
+    {"request":"system link","responseType":"response","response":{"result":"ok"}},
+    'system link nscaledemo /tmp',
+    function(instance, api, auth) {
+      api.cloneSystem = function(user, path, cwd, cb) {
+        expect(path).to.eql(path);
+        expect(user).to.not.be.null();
+        cb(null);
+      };
+    }
+  );
+
   testCommand('must list a system',
     {"request":"system list","responseType":"response","response":[{"name":"sudc","id":"f0033600-36aa-4820-8006-83e90cc20e5e"}]},
     'system list',
