@@ -1,4 +1,5 @@
-# nscale-protocol
+nscale-protocol&nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/nearform/nscale-protocol.png)](https://travis-ci.org/nearform/nscale-protocol)
+============
 
 Server side command protocol for
 [nscale](http://github.com/nearform/nscale).
