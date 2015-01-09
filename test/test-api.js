@@ -186,10 +186,11 @@ describe('protocol api', function() {
 
   testCommand('must get the deployed system',
     require(__dirname + '/fixture/deployed.json'),
-    'system deployed sudc',
+    'system deployed sudc local',
     function(instance, api, auth) {
-      api.getDeployedSystem = function(id, cb) {
+      api.getDeployedSystem = function(id, target, cb) {
         expect(id).to.eql('sudc');
+        expect(target).to.eql('local');
         cb(null, require(__dirname + '/fixture/deployed.json').response);
       };
     }
@@ -197,10 +198,11 @@ describe('protocol api', function() {
 
   testCommand('must get the head revision of a system',
     {"request":"system get","responseType":"response","response": require(__dirname + '/fixture/deployed.json').response },
-    'system get sudc',
+    'system get sudc local',
     function(instance, api, auth) {
-      api.getHeadSystem = function(id, cb) {
+      api.getHeadSystem = function(id, target, cb) {
         expect(id).to.eql('sudc');
+        expect(target).to.eql('local');
         cb(null, require(__dirname + '/fixture/deployed.json').response);
       };
     }
@@ -221,10 +223,11 @@ describe('protocol api', function() {
 
   testCommand('must list the containers',
     require(__dirname + '/fixture/container-list.json'),
-    'container list sudc',
+    'container list sudc aws',
     function(instance, api, auth) {
-      api.listContainers = function(id, cb) {
+      api.listContainers = function(id, target, cb) {
         expect(id).to.eql('sudc');
+        expect(target).to.eql('aws');
         cb(null, require(__dirname + '/fixture/container-list.json').response);
       };
     }
@@ -259,11 +262,12 @@ describe('protocol api', function() {
 
   testCommand('must deploy a system',
     {"request":"revision deploy","responseType":"response","response": { }},
-    'revision deploy sudc abcdef',
+    'revision deploy sudc abcdef local',
     function(instance, api, auth) {
-      api.deploySystem = function(user, systemId, revisionId, type, out, cb) {
+      api.deploySystem = function(user, systemId, revisionId, target, type, out, cb) {
         expect(systemId).to.eql('sudc');
         expect(revisionId).to.eql('abcdef');
+        expect(target).to.eql('local');
         expect(type).to.eql('live');
         cb(null, { result: 'ok' });
       };
@@ -272,10 +276,11 @@ describe('protocol api', function() {
 
   testCommand('must analyze a system',
     {"request":"system analyze","responseType":"response","response": require(__dirname + '/fixture/deployed.json').response },
-    'system analyze sudc',
+    'system analyze sudc local',
     function(instance, api, auth) {
-      api.analyzeSystem = function(user, systemId, out, cb) {
+      api.analyzeSystem = function(user, systemId, target, out, cb) {
         expect(systemId).to.eql('sudc');
+        expect(target).to.eql('local');
         cb(null, require(__dirname + '/fixture/deployed.json').response);
       };
     }
@@ -283,10 +288,11 @@ describe('protocol api', function() {
 
   testCommand('must check a system',
     {"request":"system check","responseType":"response","response": { result: "ok" }},
-    'system check sudc',
+    'system check sudc local',
     function(instance, api, auth) {
-      api.checkSystem= function(user, systemId, out, cb) {
+      api.checkSystem= function(user, systemId, target, out, cb) {
         expect(systemId).to.eql('sudc');
+        expect(target).to.eql('local');
         cb(null, { result: 'ok' });
       };
     }
@@ -306,11 +312,12 @@ describe('protocol api', function() {
 
   testCommand('must preview a system deploy',
     {"request":"revision preview","responseType":"response","response": {}},
-    'revision preview sudc abcdef',
+    'revision preview sudc abcdef local',
     function(instance, api, auth) {
-      api.previewSystemDeploy = function(user, systemId, revisionId, out, cb) {
+      api.previewSystemDeploy = function(user, systemId, revisionId, target, out, cb) {
         expect(systemId).to.eql('sudc');
         expect(revisionId).to.eql('abcdef');
+        expect(target).to.eql('local');
         cb(null, { result: 'ok' });
       };
     }
