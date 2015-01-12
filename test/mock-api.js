@@ -24,12 +24,12 @@ MockApi.prototype.createSystem = function(user, name, namespace, cwd, callback) 
   callback(this.nextError, system);
 };
 
-MockApi.prototype.getHeadSystem = function(systemId, callback) {
+MockApi.prototype.getHeadSystem = function(systemId, target, callback) {
   var system = {};
   callback(this.nextError, system);
 };
 
-MockApi.prototype.getDeployedSystem = function(systemId, callback) {
+MockApi.prototype.getDeployedSystem = function(systemId, target, callback) {
   var system = {};
   callback(this.nextError, system);
 };
@@ -54,7 +54,7 @@ MockApi.prototype.addRemote = function(user, systemId, url, callback) {
   callback(this.nextError);
 };
 
-MockApi.prototype.listContainers = function(systemId, callback) {
+MockApi.prototype.listContainers = function(systemId, target, callback) {
   callback(this.nextError, {});
 };
 
@@ -63,17 +63,17 @@ MockApi.prototype.buildContainer = function(user, systemId, containerId, out, ca
   callback(this.nextError, result);
 };
 
-MockApi.prototype.deployRevision = function(user, systemId, revisionId, live, out, callback) {
+MockApi.prototype.deployRevision = function(user, systemId, revisionId, target, live, out, callback) {
   var result = {};
   callback(this.nextError, result);
 };
 
-MockApi.prototype.analyzeSystem = function(user, systemId, out, callback) {
+MockApi.prototype.analyzeSystem = function(user, systemId, target, out, callback) {
   var result = {};
   callback(this.nextError, result);
 };
 
-MockApi.prototype.checkSystem = function(user, systemId, out, callback) {
+MockApi.prototype.checkSystem = function(user, systemId, target, out, callback) {
   var result = {};
   callback(this.nextError, result);
 };
@@ -83,7 +83,7 @@ MockApi.prototype.markRevision = function(user, systemId, revisionId, callback) 
   callback(this.nextError, result);
 };
 
-MockApi.prototype.previewRevision = function(user, systemId, revisionId, out, callback) {
+MockApi.prototype.previewRevision = function(user, systemId, revisionId, target, out, callback) {
   var result = {};
   callback(this.nextError, result);
 };
