@@ -132,18 +132,6 @@ describe('protocol api', function() {
     }
   );
 
-  testCommand('must get the head revision of a system',
-    {"request":"system get","responseType":"response","response": require(__dirname + '/fixture/deployed.json').response },
-    'system get sudc local',
-    function(instance, api, auth) {
-      api.getHeadSystem = function(id, target, cb) {
-        expect(id).to.eql('sudc');
-        expect(target).to.eql('local');
-        cb(null, require(__dirname + '/fixture/deployed.json').response);
-      };
-    }
-  );
-
   testCommand('must list the containers',
     require(__dirname + '/fixture/container-list.json'),
     'container list sudc aws',
