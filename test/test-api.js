@@ -58,68 +58,16 @@ describe('protocol api', function() {
     });
   }
 
-  function testMultiLineCommand(name, expected, command, data, pre) {
-    it(name, function(done) {
-
-      if (pre) {
-        pre(instance, api, auth);
-      }
-
-
-      instance.once('data', function(data) {
-        expect(data.toString().trim()).to.eql(JSON.stringify(expected));
-        instance.write('quit\n');
-        instance.once('data', function(data) {
-          expect(data.toString().trim()).to.eql(JSON.stringify({"request":"quit","responseType":"response","response":{"bye":"bye!"}}));
-          done();
-        })
-      });
-
-      instance.on('error', done);
-
-      instance.write(command + '\n');
-      instance.write(JSON.stringify(data));
-      instance.write('\nEND\n');
-    });
-
-    it('must support errors for ' + command, function(done) {
-      api.nextError = new Error('this should happen')
-
-      instance.once('data', function(data) {
-        instance.on('data', function(data) {
-          expect(data.toString()).to.eql('Error: this should happen\n');
-          done();
-        });
-      });
-
-      instance.write(command + '\n');
-      instance.write(JSON.stringify(data));
-      instance.write('\nEND\n');
-    });
-  }
-
   testCommand('must list systems with no systems',
     {"request":"system list","responseType":"response","response":[]},
     'system list'
-  );
-
-  testCommand('must clone a system',
-    {"request":"system clone","responseType":"response","response":{"result":"ok"}},
-    'system clone git@github.com:pelger/sudc.git /tmp',
-    function(instance, api, auth) {
-      api.cloneSystem = function(user, url, cwd, cb) {
-        expect(url).to.eql('git@github.com:pelger/sudc.git');
-        expect(user).to.not.be.null();
-        cb(null);
-      };
-    }
   );
 
   testCommand('must link a system',
     {"request":"system link","responseType":"response","response":{"result":"ok"}},
     'system link nscaledemo /tmp',
     function(instance, api, auth) {
-      api.cloneSystem = function(user, path, cwd, cb) {
+      api.linkSystem = function(user, path, cwd, cb) {
         expect(path).to.eql(path);
         expect(user).to.not.be.null();
         cb(null);
@@ -133,18 +81,6 @@ describe('protocol api', function() {
     function(instance, api, auth) {
       api.listSystems = function(cb) {
         cb(null, [{"name":"sudc","id":"f0033600-36aa-4820-8006-83e90cc20e5e"}]);
-      };
-    }
-  );
-
-  testCommand('must sync a system',
-    {"request":"system sync","responseType":"response","response":{"result":"ok"}},
-    'system sync sudc',
-    function(instance, api, auth) {
-      api.syncSystem = function(user, id, cb) {
-        expect(user).to.not.be.null();
-        expect(id).to.eql('sudc');
-        cb(null);
       };
     }
   );
@@ -196,31 +132,6 @@ describe('protocol api', function() {
     }
   );
 
-  testCommand('must get the head revision of a system',
-    {"request":"system get","responseType":"response","response": require(__dirname + '/fixture/deployed.json').response },
-    'system get sudc local',
-    function(instance, api, auth) {
-      api.getHeadSystem = function(id, target, cb) {
-        expect(id).to.eql('sudc');
-        expect(target).to.eql('local');
-        cb(null, require(__dirname + '/fixture/deployed.json').response);
-      };
-    }
-  );
-
-  testCommand('must add a remote to a system',
-    {"request":"remote add","responseType":"response","response":{"result":"ok"}},
-    'remote add sudc git@github.com:pelger/sudc.git',
-    function(instance, api, auth) {
-      api.addRemote = function(user, id, url, cb) {
-        expect(id).to.eql('sudc');
-        expect(url).to.eql('git@github.com:pelger/sudc.git');
-        expect(user).to.not.be.null();
-        cb(null);
-      };
-    }
-  );
-
   testCommand('must list the containers',
     require(__dirname + '/fixture/container-list.json'),
     'container list sudc aws',
@@ -229,19 +140,6 @@ describe('protocol api', function() {
         expect(id).to.eql('sudc');
         expect(target).to.eql('aws');
         cb(null, require(__dirname + '/fixture/container-list.json').response);
-      };
-    }
-  );
-
-  testMultiLineCommand('must put a system',
-    {"request":"system put","responseType":"response","response":{ result: "ok" }},
-    'system put',
-    require('./fixture/system.json'),
-    function(instance, api, auth) {
-      api.putSystem = function(user, system, cb) {
-        expect(user).to.not.be.null();
-        expect(JSON.parse(system)).to.eql(require('./fixture/system.json'));
-        cb(null);
       };
     }
   );
@@ -336,11 +234,12 @@ describe('protocol api', function() {
 
   testCommand('must get a revision',
     require(__dirname + '/fixture/revision-get.json'),
-    'revision get sudc abcdef',
+    'revision get sudc abcdef dev',
     function(instance, api, auth) {
-      api.getRevision = function(id, rev, cb) {
+      api.getRevision = function(id, rev, env, cb) {
         expect(id).to.eql('sudc');
         expect(rev).to.eql('abcdef');
+        expect(env).to.eql('dev');
         cb(null, require(__dirname + '/fixture/revision-get.json').response);
       };
     }
