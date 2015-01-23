@@ -93,7 +93,7 @@ MockApi.prototype.listRevisions = function(systemId, callback) {
   callback(this.nextError, result);
 };
 
-MockApi.prototype.getRevision = function(systemId, revisionId, callback) {
+MockApi.prototype.getRevision = function(systemId, revisionId, env, callback) {
   var result = {};
   callback(this.nextError, result);
 };
