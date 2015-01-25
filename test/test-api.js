@@ -134,11 +134,11 @@ describe('protocol api', function() {
 
   testCommand('must list the containers',
     require(__dirname + '/fixture/container-list.json'),
-    'container list sudc aws',
+    'container list sudc latest',
     function(instance, api, auth) {
-      api.listContainers = function(id, target, cb) {
+      api.listContainers = function(id, revision, out, cb) {
         expect(id).to.eql('sudc');
-        expect(target).to.eql('aws');
+        expect(revision).to.eql('latest');
         cb(null, require(__dirname + '/fixture/container-list.json').response);
       };
     }
