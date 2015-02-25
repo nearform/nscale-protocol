@@ -63,6 +63,11 @@ MockApi.prototype.buildContainer = function(user, systemId, containerId, revisio
   callback(this.nextError, result);
 };
 
+MockApi.prototype.buildAllContainers = function(user, systemId, revisionId, out, callback) {
+  var result = {};
+  callback(this.nextError, result);
+};
+
 MockApi.prototype.deployRevision = function(user, systemId, revisionId, target, live, out, callback) {
   var result = {};
   callback(this.nextError, result);

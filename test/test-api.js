@@ -157,6 +157,18 @@ describe('protocol api', function() {
     }
   );
 
+  testCommand('must build all containers',
+    {"request":"container buildall","responseType":"response","response": { result: "ok" }},
+    'container buildall sudc a42',
+    function(instance, api, auth) {
+      api.buildAllContainers = function(user, systemId, revisionId, out, cb) {
+        expect(systemId).to.eql('sudc');
+        expect(revisionId).to.eql('a42');
+        cb(null, { result: 'ok' });
+      };
+    }
+  );
+
   testCommand('must deploy a system',
     {"request":"revision deploy","responseType":"response","response": { }},
     'revision deploy sudc abcdef local',
