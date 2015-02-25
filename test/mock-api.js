@@ -58,12 +58,12 @@ MockApi.prototype.listContainers = function(systemId, revision, out, callback) {
   callback(this.nextError, {});
 };
 
-MockApi.prototype.buildContainer = function(user, systemId, containerId, revisionId, out, callback) {
+MockApi.prototype.buildContainer = function(user, systemId, containerId, revisionId, target, out, callback) {
   var result = {};
   callback(this.nextError, result);
 };
 
-MockApi.prototype.buildAllContainers = function(user, systemId, revisionId, out, callback) {
+MockApi.prototype.buildAllContainers = function(user, systemId, revisionId, target, out, callback) {
   var result = {};
   callback(this.nextError, result);
 };

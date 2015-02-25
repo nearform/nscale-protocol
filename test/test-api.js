@@ -146,12 +146,13 @@ describe('protocol api', function() {
 
   testCommand('must build a container',
     {"request":"container build","responseType":"response","response": { result: "ok" }},
-    'container build sudc abcdef a42',
+    'container build sudc abcdef a42 dev',
     function(instance, api, auth) {
-      api.buildContainer = function(user, systemId, containerId, revisionId, out, cb) {
+      api.buildContainer = function(user, systemId, containerId, revisionId, target, out, cb) {
         expect(systemId).to.eql('sudc');
         expect(containerId).to.eql('abcdef');
         expect(revisionId).to.eql('a42');
+        expect(target).to.eql('dev');
         cb(null, { result: 'ok' });
       };
     }
@@ -159,11 +160,12 @@ describe('protocol api', function() {
 
   testCommand('must build all containers',
     {"request":"container buildall","responseType":"response","response": { result: "ok" }},
-    'container buildall sudc a42',
+    'container buildall sudc a42 dev',
     function(instance, api, auth) {
-      api.buildAllContainers = function(user, systemId, revisionId, out, cb) {
+      api.buildAllContainers = function(user, systemId, revisionId, target, out, cb) {
         expect(systemId).to.eql('sudc');
         expect(revisionId).to.eql('a42');
+        expect(target).to.eql('dev');
         cb(null, { result: 'ok' });
       };
     }
