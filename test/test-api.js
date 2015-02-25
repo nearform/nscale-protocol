@@ -48,8 +48,8 @@ describe('protocol api', function() {
       api.nextError = new Error('this should happen')
 
       instance.once('data', function(data) {
-        instance.on('data', function(data) {
-          expect(data.toString()).to.eql('Error: this should happen\n');
+        instance.once('data', function(data) {
+          expect(data.toString()).to.include('this should happen');
           done();
         });
       });
@@ -144,19 +144,18 @@ describe('protocol api', function() {
     }
   );
 
-  /*
   testCommand('must build a container',
     {"request":"container build","responseType":"response","response": { result: "ok" }},
-    'container build sudc abcdef',
+    'container build sudc abcdef a42',
     function(instance, api, auth) {
-      api.buildContainer = function(user, systemId, containerId, out, cb) {
+      api.buildContainer = function(user, systemId, containerId, revisionId, out, cb) {
         expect(systemId).to.eql('sudc');
         expect(containerId).to.eql('abcdef');
+        expect(revisionId).to.eql('a42');
         cb(null, { result: 'ok' });
       };
     }
   );
-  */
 
   testCommand('must deploy a system',
     {"request":"revision deploy","responseType":"response","response": { }},
