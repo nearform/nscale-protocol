@@ -10,7 +10,7 @@
     "docker",
     "deploy"
   ],
-  "version": "0.14.5",
+  "version": "0.14.6",
   "license": "Artistic 2.0",
   "author": "Peter Elger (http://nearform.com/)",
   "contributors": [
